@@ -285,9 +285,12 @@ inttostr
 inttostrwithzeros
 irp
 irp_bit
+keypad
 keypad_init
 keypad_key_click
 keypad_key_press
+keypadport
+kp
 lcd_chr
 lcd_chr_cp
 lcd_cmd
@@ -316,6 +319,7 @@ longwordtostr
 longwordtostrwithzeros
 ltrim
 main
+mode
 mul_16x16_s
 mul_16x16_u
 mul_32x32_fp
@@ -542,6 +546,7 @@ setfdz32
 setfov32
 setfun32
 setiov3224
+shift
 shorttohex
 shorttostr
 shorttostrwithzeros
@@ -742,6 +747,7 @@ vref_mask
 w
 wcol
 wcol_bit
+welcome
 word2double
 wordtohex
 wordtostr
