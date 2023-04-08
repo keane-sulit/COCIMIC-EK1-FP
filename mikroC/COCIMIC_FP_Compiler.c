@@ -18,18 +18,13 @@ sbit LCD_D6_Direction at TRISD6_bit;
 sbit LCD_D7_Direction at TRISD7_bit;
 // End LCD module connections
 
-char txtTemp[10];
-char txtSpd[10];
+char txtTemp[16];
+char txtSpd[16];
 
 unsigned int tempValue;
 unsigned int spdValue;
 
 char i;                              // Loop variable
-
-void Move_Delay() {                  // Function used for text moving
-  Delay_ms(500);                     // You can change the moving speed here
-}
-
 
 void init() {
     // Initialize LCD library
@@ -39,54 +34,110 @@ void init() {
     PWM1_Init(25000);
 }
 
+void startFan() {
+    PORTB.f1 = 1;
+    PWM1_Start();
+    PWM1_Set_Duty(255*spdValue/100);
+}
+
+void stopFan() {
+    PORTB.f1 = 0;
+    PWM1_Stop();
+}
+
 void readTemp() {
     tempValue = ADC_Read(0);
     tempValue = tempValue * 5;    // Convert ADC value to voltage
     tempValue = tempValue / 10;  // Convert voltage to temperature
 
-    // Convert Fahrenheit to Celsius
-    tempValue = tempValue - 32;
-    tempValue = tempValue * 5;
-    tempValue = tempValue / 9;
+    if (tempValue < 32) {
+        tempValue = 0;
+        Lcd_Out(1, 12, "(-)");
+    } else {
+        Lcd_Out(1, 12, "   ");
+        // Convert Fahrenheit to Celsius
+        tempValue = tempValue - 32;
+        tempValue = tempValue * 5;
+        tempValue = tempValue / 9;
 
-    // Convert temperature to string
-    IntToStr(tempValue, txtTemp);
+        // Convert temperature to string
+        IntToStr(tempValue, txtTemp);
+    }
 }
 
 void dispTemp() {
     Lcd_Out(1, 1, "Temp: ");
-    delay_ms(10);
     Lcd_Out(1, 7, ltrim(txtTemp));
     Lcd_Out(1, 10, "C");
-    delay_ms(10);
 }
 
-void fanControl() {
-    if (tempValue > 30) {       // If temperature is greater than 30C
-        PORTB.f1 = 1;
-        PWM1_Start();
-        PWM1_Set_Duty(100);
+void autoFanControl() {
+    if (tempValue < 26) {
+        spdValue = 0;
+        stopFan();
+    } else if (tempValue < 29) {
+        spdValue = 10;
+        startFan();
+    } else if (tempValue < 32) {
+        spdValue = 30;
+        startFan();
+    } else if (tempValue < 35) {
+        spdValue = 50;
+        startFan();
+    } else if (tempValue < 38) {
+        spdValue = 70;
+        startFan();
+    } else if (tempValue < 41) {
+        spdValue = 90;
+        startFan();
+    } else if (tempValue < 50) {
+        spdValue = 100;
+        startFan();
     } else {
-        PORTB.f1 = 0;
-        PWM1_Stop();
+        stopFan();
+        Lcd_Cmd(_LCD_CLEAR);
+        Lcd_Out(1, 1, "TOO HOT!");
+        Lcd_Out(2, 1, "FAN STOP!");
+        delay_ms(300);
     }
 }
 
 void dispSpd() {
+    IntToStr(spdValue, txtSpd);             // Convert speed to string
+
+    // Display speed
     Lcd_Out(2, 1, "Speed: ");
-    delay_ms(10);
-    Lcd_Out(2, 8, ltrim(txtSpd));
-    delay_ms(10);
+    
+    if (spdValue < 100) {
+        Lcd_Out(2, 8, ltrim(txtSpd));
+        Lcd_Out(2, 10, " ");
+        Lcd_Out(2, 11, "%");
+    } else {
+        Lcd_Out(2, 8, ltrim(txtSpd));
+        Lcd_Out(2, 11, "%");
+    }
+
+    // Display ON/OFF status
+    if (spdValue == 0) {
+        Lcd_Out(2, 13, "OFF ");
+    } else if (spdValue < 33) {
+        Lcd_Out(2, 13, "LOW "); 
+    } else if (spdValue < 66) {
+        Lcd_Out(2, 13, "MID "); 
+    } else if (spdValue <= 99) {
+        Lcd_Out(2, 13, "HIGH");
+    } else {
+        Lcd_Out(2, 13, "MAX "); 
+    }
 }
 
 void main() {
     init();
 
-    while(1) {                         // Endless loop
+    while(1) {                              // Endless loop
         readTemp();
-        // LCD Output
         dispTemp();
-
-        fanControl();
+        dispSpd();
+        autoFanControl();
     }
 }

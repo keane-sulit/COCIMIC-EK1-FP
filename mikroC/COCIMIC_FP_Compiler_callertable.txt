@@ -12,6 +12,16 @@ main
 			Delay_22us
 		Mul_16X16_U
 		Div_16X16_U
+		Lcd_Out
+			Lcd_Cmd
+				Delay_1us
+				Delay_5500us
+				Delay_50us
+			Lcd_Chr_CP
+				Lcd_Cmd
+					Delay_1us
+					Delay_5500us
+					Delay_50us
 		IntToStr
 			WordToStr
 				Div_16X16_U
@@ -27,8 +37,41 @@ main
 					Delay_5500us
 					Delay_50us
 		Ltrim
-	fanControl
-		PWM1_Start
-		PWM1_Set_Duty
+	dispSpd
+		IntToStr
+			WordToStr
+				Div_16X16_U
+		Lcd_Out
+			Lcd_Cmd
+				Delay_1us
+				Delay_5500us
+				Delay_50us
+			Lcd_Chr_CP
+				Lcd_Cmd
+					Delay_1us
+					Delay_5500us
+					Delay_50us
+		Ltrim
+	autoFanControl
+		stopFan
+			PWM1_Stop
+		startFan
+			PWM1_Start
 			Mul_16X16_U
-		PWM1_Stop
+			Div_16X16_U
+			PWM1_Set_Duty
+				Mul_16X16_U
+		Lcd_Cmd
+			Delay_1us
+			Delay_5500us
+			Delay_50us
+		Lcd_Out
+			Lcd_Cmd
+				Delay_1us
+				Delay_5500us
+				Delay_50us
+			Lcd_Chr_CP
+				Lcd_Cmd
+					Delay_1us
+					Delay_5500us
+					Delay_50us

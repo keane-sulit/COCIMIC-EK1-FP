@@ -15,18 +15,13 @@ sbit LCD_D6_Direction at TRISD6_bit;
 sbit LCD_D7_Direction at TRISD7_bit;
 
 
-char txtTemp[10];
-char txtSpd[10];
+char txtTemp[16];
+char txtSpd[16];
 
 unsigned int tempValue;
 unsigned int spdValue;
 
 char i;
-
-void Move_Delay() {
- Delay_ms(500);
-}
-
 
 void init() {
 
@@ -36,11 +31,27 @@ void init() {
  PWM1_Init(25000);
 }
 
+void startFan() {
+ PORTB.f1 = 1;
+ PWM1_Start();
+ PWM1_Set_Duty(255*spdValue/100);
+}
+
+void stopFan() {
+ PORTB.f1 = 0;
+ PWM1_Stop();
+}
+
 void readTemp() {
  tempValue = ADC_Read(0);
  tempValue = tempValue * 5;
  tempValue = tempValue / 10;
 
+ if (tempValue < 32) {
+ tempValue = 0;
+ Lcd_Out(1, 12, "(-)");
+ } else {
+ Lcd_Out(1, 12, "   ");
 
  tempValue = tempValue - 32;
  tempValue = tempValue * 5;
@@ -48,32 +59,73 @@ void readTemp() {
 
 
  IntToStr(tempValue, txtTemp);
+ }
 }
 
 void dispTemp() {
  Lcd_Out(1, 1, "Temp: ");
- delay_ms(10);
  Lcd_Out(1, 7, ltrim(txtTemp));
  Lcd_Out(1, 10, "C");
- delay_ms(10);
 }
 
-void fanControl() {
- if (tempValue > 30) {
- PORTB.f1 = 1;
- PWM1_Start();
- PWM1_Set_Duty(100);
+void autoFanControl() {
+ if (tempValue < 26) {
+ spdValue = 0;
+ stopFan();
+ } else if (tempValue < 29) {
+ spdValue = 10;
+ startFan();
+ } else if (tempValue < 32) {
+ spdValue = 30;
+ startFan();
+ } else if (tempValue < 35) {
+ spdValue = 50;
+ startFan();
+ } else if (tempValue < 38) {
+ spdValue = 70;
+ startFan();
+ } else if (tempValue < 41) {
+ spdValue = 90;
+ startFan();
+ } else if (tempValue < 50) {
+ spdValue = 100;
+ startFan();
  } else {
- PORTB.f1 = 0;
- PWM1_Stop();
+ stopFan();
+ Lcd_Cmd(_LCD_CLEAR);
+ Lcd_Out(1, 1, "TOO HOT!");
+ Lcd_Out(2, 1, "FAN STOP!");
+ delay_ms(300);
  }
 }
 
 void dispSpd() {
+ IntToStr(spdValue, txtSpd);
+
+
  Lcd_Out(2, 1, "Speed: ");
- delay_ms(10);
+
+ if (spdValue < 100) {
  Lcd_Out(2, 8, ltrim(txtSpd));
- delay_ms(10);
+ Lcd_Out(2, 10, " ");
+ Lcd_Out(2, 11, "%");
+ } else {
+ Lcd_Out(2, 8, ltrim(txtSpd));
+ Lcd_Out(2, 11, "%");
+ }
+
+
+ if (spdValue == 0) {
+ Lcd_Out(2, 13, "OFF ");
+ } else if (spdValue < 33) {
+ Lcd_Out(2, 13, "LOW ");
+ } else if (spdValue < 66) {
+ Lcd_Out(2, 13, "MID ");
+ } else if (spdValue <= 99) {
+ Lcd_Out(2, 13, "HIGH");
+ } else {
+ Lcd_Out(2, 13, "MAX ");
+ }
 }
 
 void main() {
@@ -81,9 +133,8 @@ void main() {
 
  while(1) {
  readTemp();
-
  dispTemp();
-
- fanControl();
+ dispSpd();
+ autoFanControl();
  }
 }
