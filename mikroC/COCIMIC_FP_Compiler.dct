@@ -320,6 +320,7 @@ longwordtostrwithzeros
 ltrim
 main
 mode
+modecontrol
 mul_16x16_s
 mul_16x16_u
 mul_32x32_fp
@@ -747,7 +748,6 @@ vref_mask
 w
 wcol
 wcol_bit
-welcome
 word2double
 wordtohex
 wordtostr

@@ -8,21 +8,6 @@ main
 		ADC_Init
 		Keypad_Init
 		PWM1_Init
-	welcome
-		Lcd_Out
-			Lcd_Cmd
-				Delay_1us
-				Delay_5500us
-				Delay_50us
-			Lcd_Chr_CP
-				Lcd_Cmd
-					Delay_1us
-					Delay_5500us
-					Delay_50us
-		Lcd_Cmd
-			Delay_1us
-			Delay_5500us
-			Delay_50us
 	keypad
 		Keypad_Key_Click
 			Keypad_Key_Press
@@ -34,81 +19,89 @@ main
 			Div_16X16_U
 			PWM1_Set_Duty
 				Mul_16X16_U
-	Lcd_Out
-		Lcd_Cmd
-			Delay_1us
-			Delay_5500us
-			Delay_50us
-		Lcd_Chr_CP
+	modeControl
+		Lcd_Out
 			Lcd_Cmd
 				Delay_1us
 				Delay_5500us
 				Delay_50us
-	dispSpd
-		IntToStr
-			WordToStr
+			Lcd_Chr_CP
+				Lcd_Cmd
+					Delay_1us
+					Delay_5500us
+					Delay_50us
+		keypad
+			Keypad_Key_Click
+				Keypad_Key_Press
+					Delay_1us
+				Delay_10us
+			startFan
+				PWM1_Start
+				Mul_16X16_U
 				Div_16X16_U
-		Lcd_Out
-			Lcd_Cmd
-				Delay_1us
-				Delay_5500us
-				Delay_50us
-			Lcd_Chr_CP
+				PWM1_Set_Duty
+					Mul_16X16_U
+		dispSpd
+			IntToStr
+				WordToStr
+					Div_16X16_U
+			Lcd_Out
 				Lcd_Cmd
 					Delay_1us
 					Delay_5500us
 					Delay_50us
-		Ltrim
-	readTemp
-		ADC_Read
-			Delay_22us
-		Mul_16X16_U
-		Div_16X16_U
-		IntToStr
-			WordToStr
-				Div_16X16_U
-		Lcd_Out
-			Lcd_Cmd
-				Delay_1us
-				Delay_5500us
-				Delay_50us
-			Lcd_Chr_CP
-				Lcd_Cmd
-					Delay_1us
-					Delay_5500us
-					Delay_50us
-	dispTemp
-		Lcd_Out
-			Lcd_Cmd
-				Delay_1us
-				Delay_5500us
-				Delay_50us
-			Lcd_Chr_CP
-				Lcd_Cmd
-					Delay_1us
-					Delay_5500us
-					Delay_50us
-		Ltrim
-	autoFanControl
-		Lcd_Out
-			Lcd_Cmd
-				Delay_1us
-				Delay_5500us
-				Delay_50us
-			Lcd_Chr_CP
-				Lcd_Cmd
-					Delay_1us
-					Delay_5500us
-					Delay_50us
-		stopFan
-			PWM1_Stop
-		startFan
-			PWM1_Start
+				Lcd_Chr_CP
+					Lcd_Cmd
+						Delay_1us
+						Delay_5500us
+						Delay_50us
+			Ltrim
+		readTemp
+			ADC_Read
+				Delay_22us
 			Mul_16X16_U
 			Div_16X16_U
-			PWM1_Set_Duty
+			IntToStr
+				WordToStr
+					Div_16X16_U
+			Lcd_Out
+				Lcd_Cmd
+					Delay_1us
+					Delay_5500us
+					Delay_50us
+				Lcd_Chr_CP
+					Lcd_Cmd
+						Delay_1us
+						Delay_5500us
+						Delay_50us
+		dispTemp
+			Lcd_Out
+				Lcd_Cmd
+					Delay_1us
+					Delay_5500us
+					Delay_50us
+				Lcd_Chr_CP
+					Lcd_Cmd
+						Delay_1us
+						Delay_5500us
+						Delay_50us
+			Ltrim
+		autoFanControl
+			Lcd_Out
+				Lcd_Cmd
+					Delay_1us
+					Delay_5500us
+					Delay_50us
+				Lcd_Chr_CP
+					Lcd_Cmd
+						Delay_1us
+						Delay_5500us
+						Delay_50us
+			stopFan
+				PWM1_Stop
+			startFan
+				PWM1_Start
 				Mul_16X16_U
-		Lcd_Cmd
-			Delay_1us
-			Delay_5500us
-			Delay_50us
+				Div_16X16_U
+				PWM1_Set_Duty
+					Mul_16X16_U

@@ -1,5 +1,5 @@
 #line 1 "//Mac/Home/Documents/GitHub/COCIMIC-EK1-FP/mikroC/COCIMIC_FP_Compiler.c"
-#line 6 "//Mac/Home/Documents/GitHub/COCIMIC-EK1-FP/mikroC/COCIMIC_FP_Compiler.c"
+#line 7 "//Mac/Home/Documents/GitHub/COCIMIC-EK1-FP/mikroC/COCIMIC_FP_Compiler.c"
 sbit LCD_RS at RB2_bit;
 sbit LCD_EN at RB3_bit;
 sbit LCD_D4 at RC4_bit;
@@ -19,6 +19,7 @@ sbit LCD_D7_Direction at TRISC7_bit;
 char keypadPort at PORTD;
 
 
+
 char txtTemp[16];
 char txtSpd[16];
 
@@ -32,8 +33,8 @@ char shift;
 
 unsigned short mode;
 
-void init() {
 
+void init() {
  Lcd_Init();
  ADC_Init();
  Keypad_Init();
@@ -42,47 +43,59 @@ void init() {
  PWM1_Init(25000);
 }
 
+
 void startFan() {
  PORTB.f1 = 1;
  PWM1_Start();
  PWM1_Set_Duty(255*spdValue/100);
 }
 
+
 void stopFan() {
  PORTB.f1 = 0;
  PWM1_Stop();
 }
+
 
 void readTemp() {
  tempValue = ADC_Read(0);
  tempValue = tempValue * 5;
  tempValue = tempValue / 10;
 
+
  if (tempValue < 32) {
  tempValue = 0;
  IntToStr(tempValue, txtTemp);
+
+
  Lcd_Out(1, 7, "   C ");
  Lcd_Out(1, 12, "(-)");
  Lcd_Out(2, 9, "  ");
+
  } else {
  Lcd_Out(1, 12, "   ");
+
 
  tempValue = tempValue - 32;
  tempValue = tempValue * 5;
  tempValue = tempValue / 9;
-
-
  IntToStr(tempValue, txtTemp);
  }
 }
 
+
 void dispTemp() {
+
+
  Lcd_Out(1, 1, "Temp: ");
  Lcd_Out(1, 7, ltrim(txtTemp));
  Lcd_Out(1, 10, "C");
 }
 
+
 void autoFanControl() {
+
+
  if (tempValue < 26) {
  spdValue = 0;
  Lcd_Out(2, 9, " ");
@@ -106,19 +119,18 @@ void autoFanControl() {
  spdValue = 100;
  startFan();
  } else {
- stopFan();
- Lcd_Cmd(_LCD_CLEAR);
- Lcd_Out(1, 1, "TOO HOT!");
- Lcd_Out(2, 1, "FAN STOP!");
- delay_ms(300);
+ spdValue = 100;
+ Lcd_Out(1, 12, "(!)");
  }
 }
+
 
 void dispSpd() {
  IntToStr(spdValue, txtSpd);
 
 
  Lcd_Out(2, 1, "Speed: ");
+
 
  if (spdValue < 100) {
  Lcd_Out(2, 8, ltrim(txtSpd));
@@ -143,9 +155,12 @@ void dispSpd() {
  }
 }
 
+
 void keypad() {
  kp = 0;
  kp = Keypad_Key_Click();
+
+
  if (kp != 0) {
  switch (kp) {
  case 1:
@@ -199,25 +214,14 @@ void keypad() {
  }
 }
 
-void welcome() {
- Lcd_Out(1, 1, "COCIMIC-EK1 TERM 2 PROJECT");
- Lcd_Out(2, 1, "Dayrit | Guevarra | Rodriguez | Sulit");
- for (i = 0; i < 22; i++) {
- Lcd_Cmd(_LCD_SHIFT_LEFT);
- delay_ms(10);
- }
- Lcd_Cmd(_LCD_CLEAR);
-}
 
-void main() {
- init();
- welcome();
- while(1) {
- keypad();
+void modeControl() {
+
+
  if (mode == 1) {
  Lcd_Out(1, 1, "               M");
- dispSpd();
  keypad();
+ dispSpd();
  } else {
  Lcd_Out(1, 16, "A");
  readTemp();
@@ -225,5 +229,13 @@ void main() {
  dispSpd();
  autoFanControl();
  }
+}
+
+
+void main() {
+ init();
+ while(1) {
+ keypad();
+ modeControl();
  }
 }
