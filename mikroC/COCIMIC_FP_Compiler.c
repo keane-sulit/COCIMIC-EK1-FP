@@ -28,20 +28,19 @@ sbit LCD_D7_Direction at TRISD7_bit;
 // End Keypad module connections
 
 // Define global variables
-char txtTemp[16];  // Temperature value
-char txtSpd[16];   // Speed value
+char txtTemp[16];        // Temperature value
+char txtSpd[16];         // Speed value
 unsigned int tempValue;  // Temperature value
 unsigned int spdValue;   // Fan speed value
-char i;  // Loop variable
-unsigned short mode;  // 0 = Auto, 1 = Manual
+char i;                  // Loop variable
+unsigned short mode;     // 0 = Auto, 1 = Manual
 
 // Initialization function
 void init() {
-    Lcd_Init();  // Initialize LCD library
-    ADC_Init();  // Initialize ADC library
-    // Keypad_Init();     // Initialize Keypad library
-    TRISB = 0xF0;
-    PORTB = 0x00;
+    Lcd_Init();        // Initialize LCD library
+    ADC_Init();        // Initialize ADC library
+    TRISB = 0xF0;      // Set RB4-RB7 as input (Keypad)
+    PORTB = 0x00;      // Set RB4-RB7 as low
     TRISC.f0 = 0;      // Set RC0 as output (Motor driver input 1)
     PWM1_Init(25000);  // Initialize PWM1 module at 25KHz
 }
@@ -71,9 +70,9 @@ void readTemp() {
         IntToStr(tempValue, txtTemp);  // Convert temperature to string
 
         // Display temperature
-        Lcd_Out(1, 7, "   C ");
-        Lcd_Out(1, 12, "(-)");  // Display negative sign
-        Lcd_Out(2, 9, "  ");    // Clear values using space
+        Lcd_Out(1, 7, "   C ");  // Display Celsius sign
+        Lcd_Out(1, 12, "(-)");   // Display negative sign
+        Lcd_Out(2, 9, "  ");     // Clear values using space
 
     } else {                    // If temperature is above 32F
         Lcd_Out(1, 12, "   ");  // Clear values using space
@@ -145,13 +144,13 @@ void dispSpd() {
     // Display speed status
     if (spdValue == 0) {  // If speed is 0, display OFF
         Lcd_Out(2, 13, "OFF ");
-    } else if (spdValue < 33) {  // If speed is between 0 and 33, display LOW
+    } else if (spdValue < 33) {     // If speed is between 0 and 33, display LOW
         Lcd_Out(2, 13, "LOW ");
-    } else if (spdValue < 66) {  // If speed is between 33 and 66, display MID
+    } else if (spdValue < 66) {     // If speed is between 33 and 66, display MID
         Lcd_Out(2, 13, "MID ");
-    } else if (spdValue <= 99) {  // If speed is between 66 and 99, display HIGH
+    } else if (spdValue <= 99) {    // If speed is between 66 and 99, display HIGH
         Lcd_Out(2, 13, "HIGH");
-    } else {  // If speed is 100, display MAX
+    } else {                        // If speed is 100, display MAX
         Lcd_Out(2, 13, "MAX ");
     }
 }
@@ -219,6 +218,7 @@ char keypadScan() {
 
 // Keypad input function
 unsigned int keypad(int kp) {
+    // Convert key to number
     switch (kp) {
         case '1':
             return 1;
@@ -261,6 +261,7 @@ unsigned int keypad(int kp) {
 
 // Manual fan control function
 unsigned int manualFanControl(int kp) {
+    // Toggle manual fan control
     switch (kp) {
         case 1:
             spdValue = 10;  // Set speed to 10% if 1 is pressed
@@ -326,18 +327,11 @@ void modeControl() {
     }
 }
 
-// Interrupt function
-void interrupt() {
-    INTCON.GIE = 0;  // Disable global interrupt
-
-    INTCON.GIE = 1;  // Enable global interrupt
-}
-
 // Main function
 void main() {
-    init();                                                 // Initialize
-    while (1) {                                             // Endless loop
-        PORTB = manualFanControl(keypad(keypadScan()));     // Manual fan control
-        modeControl();                                      // Control mode
+    init();                                              // Initialize
+    while (1) {                                          // Endless loop
+        PORTB = manualFanControl(keypad(keypadScan()));  // Manual fan control
+        modeControl();                                   // Control mode
     }
 }
