@@ -189,35 +189,26 @@ void manualFanControl() {
  keyFlag = 0;
  if (key == 1) {
  spdValue = 10;
- startFan();
  } else if (key == 2) {
  spdValue = 20;
- startFan();
  } else if (key == 3) {
  spdValue = 30;
- startFan();
  } else if (key == 4) {
  spdValue = 40;
- startFan();
  } else if (key == 5) {
  spdValue = 50;
- startFan();
  } else if (key == 6) {
  spdValue = 60;
- startFan();
  } else if (key == 7) {
  spdValue = 70;
- startFan();
  } else if (key == 8) {
  spdValue = 80;
- startFan();
  } else if (key == 9) {
  spdValue = 90;
- startFan();
  } else if (key == 12) {
  spdValue = 100;
- startFan();
  }
+ startFan();
  }
 }
 

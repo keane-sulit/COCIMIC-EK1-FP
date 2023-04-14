@@ -749,9 +749,7 @@ L__manualFanControl114:
 	MOVWF      _spdValue+0
 	MOVLW      0
 	MOVWF      _spdValue+1
-;COCIMIC_FP_Compiler.c,199 :: 		startFan();
-	CALL       _startFan+0
-;COCIMIC_FP_Compiler.c,200 :: 		} else if (key == 2) {
+;COCIMIC_FP_Compiler.c,199 :: 		} else if (key == 2) {
 	GOTO       L_manualFanControl36
 L_manualFanControl35:
 	MOVLW      0
@@ -763,14 +761,12 @@ L_manualFanControl35:
 L__manualFanControl115:
 	BTFSS      STATUS+0, 2
 	GOTO       L_manualFanControl37
-;COCIMIC_FP_Compiler.c,201 :: 		spdValue = 20;
+;COCIMIC_FP_Compiler.c,200 :: 		spdValue = 20;
 	MOVLW      20
 	MOVWF      _spdValue+0
 	MOVLW      0
 	MOVWF      _spdValue+1
-;COCIMIC_FP_Compiler.c,202 :: 		startFan();
-	CALL       _startFan+0
-;COCIMIC_FP_Compiler.c,203 :: 		} else if (key == 3) {
+;COCIMIC_FP_Compiler.c,201 :: 		} else if (key == 3) {
 	GOTO       L_manualFanControl38
 L_manualFanControl37:
 	MOVLW      0
@@ -782,14 +778,12 @@ L_manualFanControl37:
 L__manualFanControl116:
 	BTFSS      STATUS+0, 2
 	GOTO       L_manualFanControl39
-;COCIMIC_FP_Compiler.c,204 :: 		spdValue = 30;
+;COCIMIC_FP_Compiler.c,202 :: 		spdValue = 30;
 	MOVLW      30
 	MOVWF      _spdValue+0
 	MOVLW      0
 	MOVWF      _spdValue+1
-;COCIMIC_FP_Compiler.c,205 :: 		startFan();
-	CALL       _startFan+0
-;COCIMIC_FP_Compiler.c,206 :: 		} else if (key == 4) {
+;COCIMIC_FP_Compiler.c,203 :: 		} else if (key == 4) {
 	GOTO       L_manualFanControl40
 L_manualFanControl39:
 	MOVLW      0
@@ -801,14 +795,12 @@ L_manualFanControl39:
 L__manualFanControl117:
 	BTFSS      STATUS+0, 2
 	GOTO       L_manualFanControl41
-;COCIMIC_FP_Compiler.c,207 :: 		spdValue = 40;
+;COCIMIC_FP_Compiler.c,204 :: 		spdValue = 40;
 	MOVLW      40
 	MOVWF      _spdValue+0
 	MOVLW      0
 	MOVWF      _spdValue+1
-;COCIMIC_FP_Compiler.c,208 :: 		startFan();
-	CALL       _startFan+0
-;COCIMIC_FP_Compiler.c,209 :: 		} else if (key == 5) {
+;COCIMIC_FP_Compiler.c,205 :: 		} else if (key == 5) {
 	GOTO       L_manualFanControl42
 L_manualFanControl41:
 	MOVLW      0
@@ -820,14 +812,12 @@ L_manualFanControl41:
 L__manualFanControl118:
 	BTFSS      STATUS+0, 2
 	GOTO       L_manualFanControl43
-;COCIMIC_FP_Compiler.c,210 :: 		spdValue = 50;
+;COCIMIC_FP_Compiler.c,206 :: 		spdValue = 50;
 	MOVLW      50
 	MOVWF      _spdValue+0
 	MOVLW      0
 	MOVWF      _spdValue+1
-;COCIMIC_FP_Compiler.c,211 :: 		startFan();
-	CALL       _startFan+0
-;COCIMIC_FP_Compiler.c,212 :: 		} else if (key == 6) {
+;COCIMIC_FP_Compiler.c,207 :: 		} else if (key == 6) {
 	GOTO       L_manualFanControl44
 L_manualFanControl43:
 	MOVLW      0
@@ -839,14 +829,12 @@ L_manualFanControl43:
 L__manualFanControl119:
 	BTFSS      STATUS+0, 2
 	GOTO       L_manualFanControl45
-;COCIMIC_FP_Compiler.c,213 :: 		spdValue = 60;
+;COCIMIC_FP_Compiler.c,208 :: 		spdValue = 60;
 	MOVLW      60
 	MOVWF      _spdValue+0
 	MOVLW      0
 	MOVWF      _spdValue+1
-;COCIMIC_FP_Compiler.c,214 :: 		startFan();
-	CALL       _startFan+0
-;COCIMIC_FP_Compiler.c,215 :: 		} else if (key == 7) {
+;COCIMIC_FP_Compiler.c,209 :: 		} else if (key == 7) {
 	GOTO       L_manualFanControl46
 L_manualFanControl45:
 	MOVLW      0
@@ -858,14 +846,12 @@ L_manualFanControl45:
 L__manualFanControl120:
 	BTFSS      STATUS+0, 2
 	GOTO       L_manualFanControl47
-;COCIMIC_FP_Compiler.c,216 :: 		spdValue = 70;
+;COCIMIC_FP_Compiler.c,210 :: 		spdValue = 70;
 	MOVLW      70
 	MOVWF      _spdValue+0
 	MOVLW      0
 	MOVWF      _spdValue+1
-;COCIMIC_FP_Compiler.c,217 :: 		startFan();
-	CALL       _startFan+0
-;COCIMIC_FP_Compiler.c,218 :: 		} else if (key == 8) {
+;COCIMIC_FP_Compiler.c,211 :: 		} else if (key == 8) {
 	GOTO       L_manualFanControl48
 L_manualFanControl47:
 	MOVLW      0
@@ -877,14 +863,12 @@ L_manualFanControl47:
 L__manualFanControl121:
 	BTFSS      STATUS+0, 2
 	GOTO       L_manualFanControl49
-;COCIMIC_FP_Compiler.c,219 :: 		spdValue = 80;
+;COCIMIC_FP_Compiler.c,212 :: 		spdValue = 80;
 	MOVLW      80
 	MOVWF      _spdValue+0
 	MOVLW      0
 	MOVWF      _spdValue+1
-;COCIMIC_FP_Compiler.c,220 :: 		startFan();
-	CALL       _startFan+0
-;COCIMIC_FP_Compiler.c,221 :: 		} else if (key == 9) {
+;COCIMIC_FP_Compiler.c,213 :: 		} else if (key == 9) {
 	GOTO       L_manualFanControl50
 L_manualFanControl49:
 	MOVLW      0
@@ -896,14 +880,12 @@ L_manualFanControl49:
 L__manualFanControl122:
 	BTFSS      STATUS+0, 2
 	GOTO       L_manualFanControl51
-;COCIMIC_FP_Compiler.c,222 :: 		spdValue = 90;
+;COCIMIC_FP_Compiler.c,214 :: 		spdValue = 90;
 	MOVLW      90
 	MOVWF      _spdValue+0
 	MOVLW      0
 	MOVWF      _spdValue+1
-;COCIMIC_FP_Compiler.c,223 :: 		startFan();
-	CALL       _startFan+0
-;COCIMIC_FP_Compiler.c,224 :: 		} else if (key == 12) {
+;COCIMIC_FP_Compiler.c,215 :: 		} else if (key == 12) {
 	GOTO       L_manualFanControl52
 L_manualFanControl51:
 	MOVLW      0
@@ -915,14 +897,12 @@ L_manualFanControl51:
 L__manualFanControl123:
 	BTFSS      STATUS+0, 2
 	GOTO       L_manualFanControl53
-;COCIMIC_FP_Compiler.c,225 :: 		spdValue = 100;
+;COCIMIC_FP_Compiler.c,216 :: 		spdValue = 100;
 	MOVLW      100
 	MOVWF      _spdValue+0
 	MOVLW      0
 	MOVWF      _spdValue+1
-;COCIMIC_FP_Compiler.c,226 :: 		startFan();
-	CALL       _startFan+0
-;COCIMIC_FP_Compiler.c,227 :: 		}
+;COCIMIC_FP_Compiler.c,217 :: 		}
 L_manualFanControl53:
 L_manualFanControl52:
 L_manualFanControl50:
@@ -933,22 +913,24 @@ L_manualFanControl42:
 L_manualFanControl40:
 L_manualFanControl38:
 L_manualFanControl36:
-;COCIMIC_FP_Compiler.c,228 :: 		}
+;COCIMIC_FP_Compiler.c,218 :: 		startFan();
+	CALL       _startFan+0
+;COCIMIC_FP_Compiler.c,219 :: 		}
 L_manualFanControl34:
-;COCIMIC_FP_Compiler.c,229 :: 		}
+;COCIMIC_FP_Compiler.c,220 :: 		}
 L_end_manualFanControl:
 	RETURN
 ; end of _manualFanControl
 
 _modeControl:
 
-;COCIMIC_FP_Compiler.c,232 :: 		void modeControl() {
-;COCIMIC_FP_Compiler.c,234 :: 		if (mode == 1) {                        // If mode is manual
+;COCIMIC_FP_Compiler.c,223 :: 		void modeControl() {
+;COCIMIC_FP_Compiler.c,225 :: 		if (mode == 1) {                        // If mode is manual
 	MOVF       _mode+0, 0
 	XORLW      1
 	BTFSS      STATUS+0, 2
 	GOTO       L_modeControl54
-;COCIMIC_FP_Compiler.c,235 :: 		Lcd_Out(1, 1, "               M");  // Clear temperature reading and display M on LCD
+;COCIMIC_FP_Compiler.c,226 :: 		Lcd_Out(1, 1, "               M");  // Clear temperature reading and display M on LCD
 	MOVLW      1
 	MOVWF      FARG_Lcd_Out_row+0
 	MOVLW      1
@@ -956,14 +938,14 @@ _modeControl:
 	MOVLW      ?lstr18_COCIMIC_FP_Compiler+0
 	MOVWF      FARG_Lcd_Out_text+0
 	CALL       _Lcd_Out+0
-;COCIMIC_FP_Compiler.c,236 :: 		dispSpd();                          // Display speed based on keypad input
+;COCIMIC_FP_Compiler.c,227 :: 		dispSpd();                          // Display speed based on keypad input
 	CALL       _dispSpd+0
-;COCIMIC_FP_Compiler.c,237 :: 		manualFanControl();                 // Control fan speed based on keypad input
+;COCIMIC_FP_Compiler.c,228 :: 		manualFanControl();                 // Control fan speed based on keypad input
 	CALL       _manualFanControl+0
-;COCIMIC_FP_Compiler.c,238 :: 		} else {
+;COCIMIC_FP_Compiler.c,229 :: 		} else {
 	GOTO       L_modeControl55
 L_modeControl54:
-;COCIMIC_FP_Compiler.c,239 :: 		Lcd_Out(1, 16, "A");  // Display A on LCD
+;COCIMIC_FP_Compiler.c,230 :: 		Lcd_Out(1, 16, "A");  // Display A on LCD
 	MOVLW      1
 	MOVWF      FARG_Lcd_Out_row+0
 	MOVLW      16
@@ -971,17 +953,17 @@ L_modeControl54:
 	MOVLW      ?lstr19_COCIMIC_FP_Compiler+0
 	MOVWF      FARG_Lcd_Out_text+0
 	CALL       _Lcd_Out+0
-;COCIMIC_FP_Compiler.c,240 :: 		readTemp();           // Read temperature
+;COCIMIC_FP_Compiler.c,231 :: 		readTemp();           // Read temperature
 	CALL       _readTemp+0
-;COCIMIC_FP_Compiler.c,241 :: 		dispTemp();           // Display temperature
+;COCIMIC_FP_Compiler.c,232 :: 		dispTemp();           // Display temperature
 	CALL       _dispTemp+0
-;COCIMIC_FP_Compiler.c,242 :: 		dispSpd();            // Display speed
+;COCIMIC_FP_Compiler.c,233 :: 		dispSpd();            // Display speed
 	CALL       _dispSpd+0
-;COCIMIC_FP_Compiler.c,243 :: 		autoFanControl();     // Control fan speed based on temperature
+;COCIMIC_FP_Compiler.c,234 :: 		autoFanControl();     // Control fan speed based on temperature
 	CALL       _autoFanControl+0
-;COCIMIC_FP_Compiler.c,244 :: 		}
+;COCIMIC_FP_Compiler.c,235 :: 		}
 L_modeControl55:
-;COCIMIC_FP_Compiler.c,245 :: 		}
+;COCIMIC_FP_Compiler.c,236 :: 		}
 L_end_modeControl:
 	RETURN
 ; end of _modeControl
@@ -995,21 +977,21 @@ _interrupt:
 	MOVWF      ___savePCLATH+0
 	CLRF       PCLATH+0
 
-;COCIMIC_FP_Compiler.c,248 :: 		void interrupt() {
-;COCIMIC_FP_Compiler.c,249 :: 		INTCON.f7 = 0;  // Clear GIE
+;COCIMIC_FP_Compiler.c,239 :: 		void interrupt() {
+;COCIMIC_FP_Compiler.c,240 :: 		INTCON.f7 = 0;  // Clear GIE
 	BCF        INTCON+0, 7
-;COCIMIC_FP_Compiler.c,252 :: 		if (INTCON.f0 == 1) {
+;COCIMIC_FP_Compiler.c,243 :: 		if (INTCON.f0 == 1) {
 	BTFSS      INTCON+0, 0
 	GOTO       L_interrupt56
-;COCIMIC_FP_Compiler.c,253 :: 		if (PORTB.f4 == 0) {  // If RB4 is low
+;COCIMIC_FP_Compiler.c,244 :: 		if (PORTB.f4 == 0) {  // If RB4 is low
 	BTFSC      PORTB+0, 4
 	GOTO       L_interrupt57
-;COCIMIC_FP_Compiler.c,254 :: 		keyFlag = 1;      // Set keyFlag
+;COCIMIC_FP_Compiler.c,245 :: 		keyFlag = 1;      // Set keyFlag
 	MOVLW      1
 	MOVWF      _keyFlag+0
 	MOVLW      0
 	MOVWF      _keyFlag+1
-;COCIMIC_FP_Compiler.c,255 :: 		delay_ms(100);    // Debounce button
+;COCIMIC_FP_Compiler.c,246 :: 		delay_ms(100);    // Debounce button
 	MOVLW      3
 	MOVWF      R11+0
 	MOVLW      138
@@ -1025,60 +1007,60 @@ L_interrupt58:
 	GOTO       L_interrupt58
 	NOP
 	NOP
-;COCIMIC_FP_Compiler.c,256 :: 		if (PORTB.f0 == 0) {
+;COCIMIC_FP_Compiler.c,247 :: 		if (PORTB.f0 == 0) {
 	BTFSC      PORTB+0, 0
 	GOTO       L_interrupt59
-;COCIMIC_FP_Compiler.c,257 :: 		key = 1;  // Set keypad value to 1
+;COCIMIC_FP_Compiler.c,248 :: 		key = 1;  // Set keypad value to 1
 	MOVLW      1
 	MOVWF      _key+0
 	MOVLW      0
 	MOVWF      _key+1
-;COCIMIC_FP_Compiler.c,258 :: 		} else if (PORTB.f1 == 0) {
+;COCIMIC_FP_Compiler.c,249 :: 		} else if (PORTB.f1 == 0) {
 	GOTO       L_interrupt60
 L_interrupt59:
 	BTFSC      PORTB+0, 1
 	GOTO       L_interrupt61
-;COCIMIC_FP_Compiler.c,259 :: 		key = 4;  // Set keypad value to 4
+;COCIMIC_FP_Compiler.c,250 :: 		key = 4;  // Set keypad value to 4
 	MOVLW      4
 	MOVWF      _key+0
 	MOVLW      0
 	MOVWF      _key+1
-;COCIMIC_FP_Compiler.c,260 :: 		} else if (PORTB.f2 == 0) {
+;COCIMIC_FP_Compiler.c,251 :: 		} else if (PORTB.f2 == 0) {
 	GOTO       L_interrupt62
 L_interrupt61:
 	BTFSC      PORTB+0, 2
 	GOTO       L_interrupt63
-;COCIMIC_FP_Compiler.c,261 :: 		key = 7;  // Set keypad value to 7
+;COCIMIC_FP_Compiler.c,252 :: 		key = 7;  // Set keypad value to 7
 	MOVLW      7
 	MOVWF      _key+0
 	MOVLW      0
 	MOVWF      _key+1
-;COCIMIC_FP_Compiler.c,262 :: 		} else if (PORTB.f3 == 0) {
+;COCIMIC_FP_Compiler.c,253 :: 		} else if (PORTB.f3 == 0) {
 	GOTO       L_interrupt64
 L_interrupt63:
 	BTFSC      PORTB+0, 3
 	GOTO       L_interrupt65
-;COCIMIC_FP_Compiler.c,263 :: 		key = 10;  // Set keypad value to 10 (*)
+;COCIMIC_FP_Compiler.c,254 :: 		key = 10;  // Set keypad value to 10 (*)
 	MOVLW      10
 	MOVWF      _key+0
 	MOVLW      0
 	MOVWF      _key+1
-;COCIMIC_FP_Compiler.c,264 :: 		}
+;COCIMIC_FP_Compiler.c,255 :: 		}
 L_interrupt65:
 L_interrupt64:
 L_interrupt62:
 L_interrupt60:
-;COCIMIC_FP_Compiler.c,265 :: 		}
+;COCIMIC_FP_Compiler.c,256 :: 		}
 L_interrupt57:
-;COCIMIC_FP_Compiler.c,267 :: 		if (PORTB.f5 == 0) {
+;COCIMIC_FP_Compiler.c,258 :: 		if (PORTB.f5 == 0) {
 	BTFSC      PORTB+0, 5
 	GOTO       L_interrupt66
-;COCIMIC_FP_Compiler.c,268 :: 		keyFlag = 1;    // Set keyFlag
+;COCIMIC_FP_Compiler.c,259 :: 		keyFlag = 1;    // Set keyFlag
 	MOVLW      1
 	MOVWF      _keyFlag+0
 	MOVLW      0
 	MOVWF      _keyFlag+1
-;COCIMIC_FP_Compiler.c,269 :: 		delay_ms(100);  // Debounce button
+;COCIMIC_FP_Compiler.c,260 :: 		delay_ms(100);  // Debounce button
 	MOVLW      3
 	MOVWF      R11+0
 	MOVLW      138
@@ -1094,60 +1076,60 @@ L_interrupt67:
 	GOTO       L_interrupt67
 	NOP
 	NOP
-;COCIMIC_FP_Compiler.c,270 :: 		if (PORTB.f0 == 0) {
+;COCIMIC_FP_Compiler.c,261 :: 		if (PORTB.f0 == 0) {
 	BTFSC      PORTB+0, 0
 	GOTO       L_interrupt68
-;COCIMIC_FP_Compiler.c,271 :: 		key = 2;  // Set keypad value to 2
+;COCIMIC_FP_Compiler.c,262 :: 		key = 2;  // Set keypad value to 2
 	MOVLW      2
 	MOVWF      _key+0
 	MOVLW      0
 	MOVWF      _key+1
-;COCIMIC_FP_Compiler.c,272 :: 		} else if (PORTB.f1 == 0) {
+;COCIMIC_FP_Compiler.c,263 :: 		} else if (PORTB.f1 == 0) {
 	GOTO       L_interrupt69
 L_interrupt68:
 	BTFSC      PORTB+0, 1
 	GOTO       L_interrupt70
-;COCIMIC_FP_Compiler.c,273 :: 		key = 5;  // Set keypad value to 5
+;COCIMIC_FP_Compiler.c,264 :: 		key = 5;  // Set keypad value to 5
 	MOVLW      5
 	MOVWF      _key+0
 	MOVLW      0
 	MOVWF      _key+1
-;COCIMIC_FP_Compiler.c,274 :: 		} else if (PORTB.f2 == 0) {
+;COCIMIC_FP_Compiler.c,265 :: 		} else if (PORTB.f2 == 0) {
 	GOTO       L_interrupt71
 L_interrupt70:
 	BTFSC      PORTB+0, 2
 	GOTO       L_interrupt72
-;COCIMIC_FP_Compiler.c,275 :: 		key = 8;  // Set keypad value to 8
+;COCIMIC_FP_Compiler.c,266 :: 		key = 8;  // Set keypad value to 8
 	MOVLW      8
 	MOVWF      _key+0
 	MOVLW      0
 	MOVWF      _key+1
-;COCIMIC_FP_Compiler.c,276 :: 		} else if (PORTB.f3 == 12) {
+;COCIMIC_FP_Compiler.c,267 :: 		} else if (PORTB.f3 == 12) {
 	GOTO       L_interrupt73
 L_interrupt72:
 	BTFSC      PORTB+0, 3
 	GOTO       L_interrupt74
-;COCIMIC_FP_Compiler.c,277 :: 		key = 12;  // Set keypad value to 12
+;COCIMIC_FP_Compiler.c,268 :: 		key = 12;  // Set keypad value to 12
 	MOVLW      12
 	MOVWF      _key+0
 	MOVLW      0
 	MOVWF      _key+1
-;COCIMIC_FP_Compiler.c,278 :: 		}
+;COCIMIC_FP_Compiler.c,269 :: 		}
 L_interrupt74:
 L_interrupt73:
 L_interrupt71:
 L_interrupt69:
-;COCIMIC_FP_Compiler.c,279 :: 		}
+;COCIMIC_FP_Compiler.c,270 :: 		}
 L_interrupt66:
-;COCIMIC_FP_Compiler.c,281 :: 		if (PORTB.f6 == 0) {
+;COCIMIC_FP_Compiler.c,272 :: 		if (PORTB.f6 == 0) {
 	BTFSC      PORTB+0, 6
 	GOTO       L_interrupt75
-;COCIMIC_FP_Compiler.c,282 :: 		keyFlag = 1;    // Set keyFlag
+;COCIMIC_FP_Compiler.c,273 :: 		keyFlag = 1;    // Set keyFlag
 	MOVLW      1
 	MOVWF      _keyFlag+0
 	MOVLW      0
 	MOVWF      _keyFlag+1
-;COCIMIC_FP_Compiler.c,283 :: 		delay_ms(100);  // Debounce button
+;COCIMIC_FP_Compiler.c,274 :: 		delay_ms(100);  // Debounce button
 	MOVLW      3
 	MOVWF      R11+0
 	MOVLW      138
@@ -1163,58 +1145,58 @@ L_interrupt76:
 	GOTO       L_interrupt76
 	NOP
 	NOP
-;COCIMIC_FP_Compiler.c,284 :: 		if (PORTB.f0 == 0) {
+;COCIMIC_FP_Compiler.c,275 :: 		if (PORTB.f0 == 0) {
 	BTFSC      PORTB+0, 0
 	GOTO       L_interrupt77
-;COCIMIC_FP_Compiler.c,285 :: 		key = 3;  // Set keypad value to 3
+;COCIMIC_FP_Compiler.c,276 :: 		key = 3;  // Set keypad value to 3
 	MOVLW      3
 	MOVWF      _key+0
 	MOVLW      0
 	MOVWF      _key+1
-;COCIMIC_FP_Compiler.c,286 :: 		} else if (PORTB.f1 == 0) {
+;COCIMIC_FP_Compiler.c,277 :: 		} else if (PORTB.f1 == 0) {
 	GOTO       L_interrupt78
 L_interrupt77:
 	BTFSC      PORTB+0, 1
 	GOTO       L_interrupt79
-;COCIMIC_FP_Compiler.c,287 :: 		key = 6;  // Set keypad value to 6
+;COCIMIC_FP_Compiler.c,278 :: 		key = 6;  // Set keypad value to 6
 	MOVLW      6
 	MOVWF      _key+0
 	MOVLW      0
 	MOVWF      _key+1
-;COCIMIC_FP_Compiler.c,288 :: 		} else if (PORTB.f2 == 0) {
+;COCIMIC_FP_Compiler.c,279 :: 		} else if (PORTB.f2 == 0) {
 	GOTO       L_interrupt80
 L_interrupt79:
 	BTFSC      PORTB+0, 2
 	GOTO       L_interrupt81
-;COCIMIC_FP_Compiler.c,289 :: 		key = 9;  // Set keypad value to 9
+;COCIMIC_FP_Compiler.c,280 :: 		key = 9;  // Set keypad value to 9
 	MOVLW      9
 	MOVWF      _key+0
 	MOVLW      0
 	MOVWF      _key+1
-;COCIMIC_FP_Compiler.c,290 :: 		} else if (PORTB.f3 == 0) {
+;COCIMIC_FP_Compiler.c,281 :: 		} else if (PORTB.f3 == 0) {
 	GOTO       L_interrupt82
 L_interrupt81:
 	BTFSC      PORTB+0, 3
 	GOTO       L_interrupt83
-;COCIMIC_FP_Compiler.c,291 :: 		key = 11;  // Set keypad value to 11 (#)
+;COCIMIC_FP_Compiler.c,282 :: 		key = 11;  // Set keypad value to 11 (#)
 	MOVLW      11
 	MOVWF      _key+0
 	MOVLW      0
 	MOVWF      _key+1
-;COCIMIC_FP_Compiler.c,292 :: 		}
+;COCIMIC_FP_Compiler.c,283 :: 		}
 L_interrupt83:
 L_interrupt82:
 L_interrupt80:
 L_interrupt78:
-;COCIMIC_FP_Compiler.c,293 :: 		}
+;COCIMIC_FP_Compiler.c,284 :: 		}
 L_interrupt75:
-;COCIMIC_FP_Compiler.c,295 :: 		INTCON.f0 = 0;  // Clear RBIF
+;COCIMIC_FP_Compiler.c,286 :: 		INTCON.f0 = 0;  // Clear RBIF
 	BCF        INTCON+0, 0
-;COCIMIC_FP_Compiler.c,296 :: 		}
+;COCIMIC_FP_Compiler.c,287 :: 		}
 L_interrupt56:
-;COCIMIC_FP_Compiler.c,297 :: 		INTCON.f7 = 1;  // Set GIE
+;COCIMIC_FP_Compiler.c,288 :: 		INTCON.f7 = 1;  // Set GIE
 	BSF        INTCON+0, 7
-;COCIMIC_FP_Compiler.c,298 :: 		}
+;COCIMIC_FP_Compiler.c,289 :: 		}
 L_end_interrupt:
 L__interrupt126:
 	MOVF       ___savePCLATH+0, 0
@@ -1228,22 +1210,22 @@ L__interrupt126:
 
 _main:
 
-;COCIMIC_FP_Compiler.c,301 :: 		void main() {
-;COCIMIC_FP_Compiler.c,302 :: 		init();             // Initialize
+;COCIMIC_FP_Compiler.c,292 :: 		void main() {
+;COCIMIC_FP_Compiler.c,293 :: 		init();             // Initialize
 	CALL       _init+0
-;COCIMIC_FP_Compiler.c,303 :: 		initInterrupt();    // Initialize interrupt
+;COCIMIC_FP_Compiler.c,294 :: 		initInterrupt();    // Initialize interrupt
 	CALL       _initInterrupt+0
-;COCIMIC_FP_Compiler.c,304 :: 		while (1) {         // Endless loop
+;COCIMIC_FP_Compiler.c,295 :: 		while (1) {         // Endless loop
 L_main84:
-;COCIMIC_FP_Compiler.c,305 :: 		keypadScan();   // Scan keypad
+;COCIMIC_FP_Compiler.c,296 :: 		keypadScan();   // Scan keypad
 	CALL       _keypadScan+0
-;COCIMIC_FP_Compiler.c,306 :: 		keypad();       // Keypad function
+;COCIMIC_FP_Compiler.c,297 :: 		keypad();       // Keypad function
 	CALL       _keypad+0
-;COCIMIC_FP_Compiler.c,307 :: 		modeControl();  // Control mode
+;COCIMIC_FP_Compiler.c,298 :: 		modeControl();  // Control mode
 	CALL       _modeControl+0
-;COCIMIC_FP_Compiler.c,308 :: 		}
+;COCIMIC_FP_Compiler.c,299 :: 		}
 	GOTO       L_main84
-;COCIMIC_FP_Compiler.c,309 :: 		}
+;COCIMIC_FP_Compiler.c,300 :: 		}
 L_end_main:
 	GOTO       $+0
 ; end of _main
