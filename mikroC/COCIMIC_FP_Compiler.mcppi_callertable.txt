@@ -7,16 +7,9 @@ main
 			Delay_1us
 		ADC_Init
 		PWM1_Init
+	initInterrupt
 	keypadScan
-		keypadKey
 	keypad
-	manualFanControl
-		startFan
-			PWM1_Start
-			Mul_16x16_U
-			Div_16x16_U
-			PWM1_Set_Duty
-				Mul_16x16_U
 	modeControl
 		Lcd_Out
 			Lcd_Cmd
@@ -43,6 +36,13 @@ main
 						Delay_5500us
 						Delay_50us
 			Ltrim
+		manualFanControl
+			startFan
+				PWM1_Start
+				Mul_16x16_U
+				Div_16x16_U
+				PWM1_Set_Duty
+					Mul_16x16_U
 		readTemp
 			ADC_Read
 				Delay_22us

@@ -268,6 +268,7 @@ ics_auto
 ics_off
 indf
 init
+initinterrupt
 int2double
 intcon
 inte
@@ -282,8 +283,12 @@ inttostr
 inttostrwithzeros
 irp
 irp_bit
+key
+keyflag
 keypad
-keypadkey
+keypad_init
+keypad_key_click
+keypad_key_press
 keypadscan
 lcd_chr
 lcd_chr_cp
@@ -624,7 +629,6 @@ t2ckps1_bit
 t2con
 tempvalue
 tmr0
-tmr0count
 tmr0ie
 tmr0ie_bit
 tmr0if

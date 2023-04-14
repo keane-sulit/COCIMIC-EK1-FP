@@ -61,13 +61,14 @@ Count=0
 [PLDS]
 Count=0
 [Useses]
-Count=6
+Count=7
 File0=Lcd
 File1=Lcd_Constants
 File2=ADC
 File3=Conversions
 File4=PWM
 File5=C_String
+File6=Keypad4x4
 [EXPANDED NODES]
 Node1=Sources
 Count=1

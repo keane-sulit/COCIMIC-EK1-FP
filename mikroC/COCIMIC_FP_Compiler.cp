@@ -1,5 +1,5 @@
 #line 1 "//Mac/Home/Documents/GitHub/COCIMIC-EK1-FP/mikroC/COCIMIC_FP_Compiler.c"
-#line 11 "//Mac/Home/Documents/GitHub/COCIMIC-EK1-FP/mikroC/COCIMIC_FP_Compiler.c"
+#line 10 "//Mac/Home/Documents/GitHub/COCIMIC-EK1-FP/mikroC/COCIMIC_FP_Compiler.c"
 sbit LCD_RS at RD2_bit;
 sbit LCD_EN at RD3_bit;
 sbit LCD_D4 at RD4_bit;
@@ -16,33 +16,34 @@ sbit LCD_D7_Direction at TRISD7_bit;
 
 
 
-
-
-
-
 char txtTemp[16];
 char txtSpd[16];
-
-
-
 unsigned int tempValue;
 unsigned int spdValue;
-
 char i;
-
-unsigned short mode;
-
-unsigned int tmr0Count;
+unsigned short mode = 0;
+unsigned int key;
+unsigned int keyFlag;
 
 
 void init() {
  Lcd_Init();
  ADC_Init();
-
  TRISB = 0xF0;
- PORTB = 0x00;
+ TRISD = 0x00;
+ PORTB = 0x0F;
  TRISC.f0 = 0;
  PWM1_Init(25000);
+}
+
+
+void initInterrupt() {
+ INTCON.f7 = 1;
+ INTCON.f6 = 1;
+ INTCON.f3 = 1;
+ INTCON.f0 = 1;
+
+ OPTION_REG.f7 = 0;
 }
 
 
@@ -156,157 +157,67 @@ void dispSpd() {
 }
 
 
-char keypadKey(char row, char col) {
+void keypadScan() {
+ key = 0;
+ PORTB.F0 = 0;
+ delay_ms(1);
+ PORTB.F0 = 1;
+ PORTB.F1 = 0;
+ delay_ms(1);
+ PORTB.F1 = 1;
+ PORTB.F2 = 0;
+ delay_ms(1);
+ PORTB.F2 = 1;
+ PORTB.F3 = 0;
+ delay_ms(1);
+ PORTB.F3 = 1;
+}
 
- if (col == 0) {
- if (row == 0) {
- return '1';
- } else if (row == 1) {
- return '4';
- } else if (row == 2) {
- return '7';
- } else if (row == 3) {
- return '*';
- }
- } else if (col == 1) {
- if (row == 0) {
- return '2';
- } else if (row == 1) {
- return '5';
- } else if (row == 2) {
- return '8';
- } else if (row == 3) {
- return '0';
- }
- } else if (col == 2) {
- if (row == 0) {
- return '3';
- } else if (row == 1) {
- return '6';
- } else if (row == 2) {
- return '9';
- } else if (row == 3) {
- return '#';
+void keypad() {
+ if (keyFlag == 1) {
+ if (key == 10) {
+ mode = 1;
+ } else if (key == 11) {
+ mode = 0;
  }
  }
 }
 
 
-char keypadScan() {
- for (i = 0; i < 4; i++) {
-
- if (i == 0) {
- PORTB = 1;
- } else if (i == 1) {
- PORTB = 2;
- } else if (i == 2) {
- PORTB = 4;
- } else if (i == 3) {
- PORTB = 8;
- }
-
-
- if (PORTB.f4) {
- return keypadKey(i, 0);
- } else if (PORTB.f5) {
- return keypadKey(i, 1);
- } else if (PORTB.f6) {
- return keypadKey(i, 2);
- }
- }
-}
-
-
-unsigned int keypad(int kp) {
- switch (kp) {
- case '1':
- return 1;
- break;
- case '2':
- return 2;
- break;
- case '3':
- return 3;
- break;
- case '4':
- return 4;
- break;
- case '5':
- return 5;
- break;
- case '6':
- return 6;
- break;
- case '7':
- return 7;
- break;
- case '8':
- return 8;
- break;
- case '9':
- return 9;
- break;
- case '0':
- return 10;
- break;
- case '*':
- return 11;
- break;
- case '#':
- return 12;
- break;
- }
-}
-
-
-unsigned int manualFanControl(int kp) {
- switch (kp) {
- case 1:
+void manualFanControl() {
+ if (keyFlag == 1) {
+ keyFlag = 0;
+ if (key == 1) {
  spdValue = 10;
  startFan();
- break;
- case 2:
+ } else if (key == 2) {
  spdValue = 20;
  startFan();
- break;
- case 3:
+ } else if (key == 3) {
  spdValue = 30;
  startFan();
- break;
- case 4:
+ } else if (key == 4) {
  spdValue = 40;
  startFan();
- break;
- case 5:
+ } else if (key == 5) {
  spdValue = 50;
  startFan();
- break;
- case 6:
+ } else if (key == 6) {
  spdValue = 60;
  startFan();
- break;
- case 7:
+ } else if (key == 7) {
  spdValue = 70;
  startFan();
- break;
- case 8:
+ } else if (key == 8) {
  spdValue = 80;
  startFan();
- break;
- case 9:
+ } else if (key == 9) {
  spdValue = 90;
  startFan();
- break;
- case 10:
+ } else if (key == 12) {
  spdValue = 100;
  startFan();
- break;
- case 11:
- mode = 1;
- break;
- case 12:
- mode = 0;
- break;
+ }
  }
 }
 
@@ -316,6 +227,7 @@ void modeControl() {
  if (mode == 1) {
  Lcd_Out(1, 1, "               M");
  dispSpd();
+ manualFanControl();
  } else {
  Lcd_Out(1, 16, "A");
  readTemp();
@@ -327,17 +239,64 @@ void modeControl() {
 
 
 void interrupt() {
- INTCON.GIE = 0;
+ INTCON.f7 = 0;
 
- INTCON.GIE = 1;
+
+ if (INTCON.f0 == 1) {
+ if (PORTB.f4 == 0) {
+ keyFlag = 1;
+ delay_ms(100);
+ if (PORTB.f0 == 0) {
+ key = 1;
+ } else if (PORTB.f1 == 0) {
+ key = 4;
+ } else if (PORTB.f2 == 0) {
+ key = 7;
+ } else if (PORTB.f3 == 0) {
+ key = 10;
+ }
+ }
+
+ if (PORTB.f5 == 0) {
+ keyFlag = 1;
+ delay_ms(100);
+ if (PORTB.f0 == 0) {
+ key = 2;
+ } else if (PORTB.f1 == 0) {
+ key = 5;
+ } else if (PORTB.f2 == 0) {
+ key = 8;
+ } else if (PORTB.f3 == 12) {
+ key = 12;
+ }
+ }
+
+ if (PORTB.f6 == 0) {
+ keyFlag = 1;
+ delay_ms(100);
+ if (PORTB.f0 == 0) {
+ key = 3;
+ } else if (PORTB.f1 == 0) {
+ key = 6;
+ } else if (PORTB.f2 == 0) {
+ key = 9;
+ } else if (PORTB.f3 == 0) {
+ key = 11;
+ }
+ }
+
+ INTCON.f0 = 0;
+ }
+ INTCON.f7 = 1;
 }
 
 
 void main() {
  init();
+ initInterrupt();
  while (1) {
- PORTB = manualFanControl(keypad(keypadScan()));
- delay_ms(100);
+ keypadScan();
+ keypad();
  modeControl();
  }
 }
