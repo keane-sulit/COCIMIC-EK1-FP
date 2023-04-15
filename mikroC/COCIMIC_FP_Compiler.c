@@ -165,7 +165,7 @@ void dispSpd() {
 
 // Keypad scan function
 void keypadScan() {
-    key = 0;       // Clear key value
+    key = 0;  // Clear key value
     PORTB.F0 = 0;
     delay_ms(1);
     PORTB.F0 = 1;

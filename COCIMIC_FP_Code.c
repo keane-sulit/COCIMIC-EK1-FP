@@ -3,7 +3,7 @@ This is a firmware code for the project,
 "A Simple Temperature-Controlled Fan using PIC16F877A".
 
 This code is written in mikroC PRO for PIC compiler.
-Build 2023.04.12 08:32 PM
+Build 2023.04.14 12:33 AM
 */
 
 // LCD module connections
@@ -22,26 +22,35 @@ sbit LCD_D6_Direction at TRISD6_bit;
 sbit LCD_D7_Direction at TRISD7_bit;
 // End LCD module connections
 
-// Keypad module connections
-// char keypadPort at PORTB;
-// End Keypad module connections
-
 // Define global variables
-char txtTemp[16];        // Temperature value
-char txtSpd[16];         // Speed value
-unsigned int tempValue;  // Temperature value
-unsigned int spdValue;   // Fan speed value
-char i;                  // Loop variable
-unsigned short mode;     // 0 = Auto, 1 = Manual
+char txtTemp[16];         // Temperature value
+char txtSpd[16];          // Speed value
+unsigned int tempValue;   // Temperature value
+unsigned int spdValue;    // Fan speed value
+char i;                   // Loop variable
+unsigned short mode = 0;  // 0 = Auto, 1 = Manual
+unsigned int key;         // Keypad value
+unsigned int keyFlag;     // Keypad flag
 
 // Initialization function
 void init() {
     Lcd_Init();        // Initialize LCD library
     ADC_Init();        // Initialize ADC library
     TRISB = 0xF0;      // Set RB4-RB7 as input (Keypad)
-    PORTB = 0x00;      // Set RB4-RB7 as low
+    TRISD = 0x00;      // Set RD0-RD7 as output (LED)
+    PORTB = 0x0F;      // Set RB4-RB7 as low
     TRISC.f0 = 0;      // Set RC0 as output (Motor driver input 1)
     PWM1_Init(25000);  // Initialize PWM1 module at 25KHz
+}
+
+// Interrupt initialization function
+void initInterrupt() {
+    INTCON.f7 = 1;  // Enable global interrupt
+    INTCON.f6 = 1;  // Enable peripheral interrupt
+    INTCON.f3 = 1;  // Enable RB port change interrupt
+    INTCON.f0 = 1;  // Enable RB0 interrupt
+
+    OPTION_REG.f7 = 0;  // Enable pull-up
 }
 
 // Start fan function
@@ -143,171 +152,70 @@ void dispSpd() {
     // Display speed status
     if (spdValue == 0) {  // If speed is 0, display OFF
         Lcd_Out(2, 13, "OFF ");
-    } else if (spdValue < 33) {     // If speed is between 0 and 33, display LOW
+    } else if (spdValue < 33) {  // If speed is between 0 and 33, display LOW
         Lcd_Out(2, 13, "LOW ");
-    } else if (spdValue < 66) {     // If speed is between 33 and 66, display MID
+    } else if (spdValue < 66) {  // If speed is between 33 and 66, display MID
         Lcd_Out(2, 13, "MID ");
-    } else if (spdValue <= 99) {    // If speed is between 66 and 99, display HIGH
+    } else if (spdValue <= 99) {  // If speed is between 66 and 99, display HIGH
         Lcd_Out(2, 13, "HIGH");
-    } else {                        // If speed is 100, display MAX
+    } else {  // If speed is 100, display MAX
         Lcd_Out(2, 13, "MAX ");
     }
 }
 
-// Keypad function
-char keypadKey(char row, char col) {
-    // Return key value
-    if (col == 0) {
-        if (row == 0) {
-            return '1';
-        } else if (row == 1) {
-            return '4';
-        } else if (row == 2) {
-            return '7';
-        } else if (row == 3) {
-            return '*';
-        }
-    } else if (col == 1) {
-        if (row == 0) {
-            return '2';
-        } else if (row == 1) {
-            return '5';
-        } else if (row == 2) {
-            return '8';
-        } else if (row == 3) {
-            return '0';
-        }
-    } else if (col == 2) {
-        if (row == 0) {
-            return '3';
-        } else if (row == 1) {
-            return '6';
-        } else if (row == 2) {
-            return '9';
-        } else if (row == 3) {
-            return '#';
-        }
-    }
-}
-
 // Keypad scan function
-char keypadScan() {
-    for (i = 0; i < 3; i++) {
-        // Scan columns
-        if (i == 0) {
-            PORTB = 1;
-        } else if (i == 1) {
-            PORTB = 2;
-        } else if (i == 2) {
-            PORTB = 4;
-        }
-
-        // Scan rows
-        if (PORTB.f4) {
-            return keypadKey(0, i);
-        } else if (PORTB.f5) {
-            return keypadKey(1, i);
-        } else if (PORTB.f6) {
-            return keypadKey(2, i);
-        } else if (PORTB.f7) {
-            return keypadKey(3, i);
-        }
-    }
+void keypadScan() {
+    key = 0;  // Clear key value
+    PORTB.F0 = 0;
+    delay_ms(1);
+    PORTB.F0 = 1;
+    PORTB.F1 = 0;
+    delay_ms(1);
+    PORTB.F1 = 1;
+    PORTB.F2 = 0;
+    delay_ms(1);
+    PORTB.F2 = 1;
+    PORTB.F3 = 0;
+    delay_ms(1);
+    PORTB.F3 = 1;
 }
 
-// Keypad input function
-unsigned int keypad(int kp) {
-    // Convert key to number
-    switch (kp) {
-        case '1':
-            return 1;
-            break;
-        case '2':
-            return 2;
-            break;
-        case '3':
-            return 3;
-            break;
-        case '4':
-            return 4;
-            break;
-        case '5':
-            return 5;
-            break;
-        case '6':
-            return 6;
-            break;
-        case '7':
-            return 7;
-            break;
-        case '8':
-            return 8;
-            break;
-        case '9':
-            return 9;
-            break;
-        case '0':
-            return 10;
-            break;
-        case '*':
-            return 11;
-            break;
-        case '#':
-            return 12;
-            break;
+void keypad() {
+    if (keyFlag == 1) {
+        if (key == 10) {
+            mode = 1;
+        } else if (key == 11) {
+            mode = 0;
+        }
     }
 }
 
 // Manual fan control function
-unsigned int manualFanControl(int kp) {
-    // Toggle manual fan control
-    switch (kp) {
-        case 1:
-            spdValue = 10;  // Set speed to 10% if 1 is pressed
-            startFan();
-            break;
-        case 2:
-            spdValue = 20;  // Set speed to 20% if 2 is pressed
-            startFan();
-            break;
-        case 3:
-            spdValue = 30;  // Set speed to 30% if 3 is pressed
-            startFan();
-            break;
-        case 4:
-            spdValue = 40;  // Set speed to 40% if 4 is pressed
-            startFan();
-            break;
-        case 5:
-            spdValue = 50;  // Set speed to 50% if 5 is pressed
-            startFan();
-            break;
-        case 6:
-            spdValue = 60;  // Set speed to 60% if 6 is pressed
-            startFan();
-            break;
-        case 7:
-            spdValue = 70;  // Set speed to 70% if 7 is pressed
-            startFan();
-            break;
-        case 8:
-            spdValue = 80;  // Set speed to 80% if 8 is pressed
-            startFan();
-            break;
-        case 9:
-            spdValue = 90;  // Set speed to 90% if 9 is pressed
-            startFan();
-            break;
-        case 10:
-            spdValue = 100;  // Set speed to 100% if * is pressed
-            startFan();
-            break;
-        case 11:
-            mode = 1;  // Set mode to manual if * is pressed
-            break;
-        case 12:
-            mode = 0;  // Set mode to auto if # is pressed
-            break;
+void manualFanControl() {
+    if (keyFlag == 1) {
+        keyFlag = 0;  // Clear keyFlag
+        if (key == 1) {
+            spdValue = 10;
+        } else if (key == 2) {
+            spdValue = 20;
+        } else if (key == 3) {
+            spdValue = 30;
+        } else if (key == 4) {
+            spdValue = 40;
+        } else if (key == 5) {
+            spdValue = 50;
+        } else if (key == 6) {
+            spdValue = 60;
+        } else if (key == 7) {
+            spdValue = 70;
+        } else if (key == 8) {
+            spdValue = 80;
+        } else if (key == 9) {
+            spdValue = 90;
+        } else if (key == 12) {
+            spdValue = 100;
+        }
+        startFan();
     }
 }
 
@@ -317,6 +225,7 @@ void modeControl() {
     if (mode == 1) {                        // If mode is manual
         Lcd_Out(1, 1, "               M");  // Clear temperature reading and display M on LCD
         dispSpd();                          // Display speed based on keypad input
+        manualFanControl();                 // Control fan speed based on keypad input
     } else {
         Lcd_Out(1, 16, "A");  // Display A on LCD
         readTemp();           // Read temperature
@@ -326,11 +235,66 @@ void modeControl() {
     }
 }
 
+// Interrupt function
+void interrupt() {
+    INTCON.f7 = 0;  // Clear GIE
+
+    // ISR for PORTB change
+    if (INTCON.f0 == 1) {
+        if (PORTB.f4 == 0) {  // If RB4 is low
+            keyFlag = 1;      // Set keyFlag
+            delay_ms(100);    // Debounce button
+            if (PORTB.f0 == 0) {
+                key = 1;  // Set keypad value to 1
+            } else if (PORTB.f1 == 0) {
+                key = 4;  // Set keypad value to 4
+            } else if (PORTB.f2 == 0) {
+                key = 7;  // Set keypad value to 7
+            } else if (PORTB.f3 == 0) {
+                key = 10;  // Set keypad value to 10 (*)
+            }
+        }
+
+        if (PORTB.f5 == 0) {
+            keyFlag = 1;    // Set keyFlag
+            delay_ms(100);  // Debounce button
+            if (PORTB.f0 == 0) {
+                key = 2;  // Set keypad value to 2
+            } else if (PORTB.f1 == 0) {
+                key = 5;  // Set keypad value to 5
+            } else if (PORTB.f2 == 0) {
+                key = 8;  // Set keypad value to 8
+            } else if (PORTB.f3 == 12) {
+                key = 12;  // Set keypad value to 12
+            }
+        }
+
+        if (PORTB.f6 == 0) {
+            keyFlag = 1;    // Set keyFlag
+            delay_ms(100);  // Debounce button
+            if (PORTB.f0 == 0) {
+                key = 3;  // Set keypad value to 3
+            } else if (PORTB.f1 == 0) {
+                key = 6;  // Set keypad value to 6
+            } else if (PORTB.f2 == 0) {
+                key = 9;  // Set keypad value to 9
+            } else if (PORTB.f3 == 0) {
+                key = 11;  // Set keypad value to 11 (#)
+            }
+        }
+
+        INTCON.f0 = 0;  // Clear RBIF
+    }
+    INTCON.f7 = 1;  // Set GIE
+}
+
 // Main function
 void main() {
-    init();                                              // Initialize
-    while (1) {                                          // Endless loop
-        PORTB = manualFanControl(keypad(keypadScan()));  // Manual fan control
-        modeControl();                                   // Control mode
+    init();             // Initialize
+    initInterrupt();    // Initialize interrupt
+    while (1) {         // Endless loop
+        keypadScan();   // Scan keypad
+        keypad();       // Keypad function
+        modeControl();  // Control mode
     }
 }

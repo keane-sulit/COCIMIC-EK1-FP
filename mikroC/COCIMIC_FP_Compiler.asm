@@ -604,7 +604,7 @@ L_end_dispSpd:
 _keypadScan:
 
 ;COCIMIC_FP_Compiler.c,167 :: 		void keypadScan() {
-;COCIMIC_FP_Compiler.c,168 :: 		key = 0;       // Clear key value
+;COCIMIC_FP_Compiler.c,168 :: 		key = 0;  // Clear key value
 	CLRF       _key+0
 	CLRF       _key+1
 ;COCIMIC_FP_Compiler.c,169 :: 		PORTB.F0 = 0;
